@@ -6,7 +6,7 @@ passwd $username
 
 pacman -S --noconfirm sudo
 
-sed "s/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g" /etc/sudoers > /etc/sudores
+sed -i "s/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g" /etc/sudoers
 
 gpasswd -a $username wheel
 gpasswd -a $username audio

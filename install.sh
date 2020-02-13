@@ -46,7 +46,7 @@ wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/maste
 
 echo ""
 echo " Installing packages"
-pacstrap /mnt base linux linux-firmware dhcpcd networkmanager wget vim
+pacstrap /mnt base base-devel linux linux-firmware dhcpcd networkmanager wget vim xterm rsync
 
 echo ""
 echo " fstab"
