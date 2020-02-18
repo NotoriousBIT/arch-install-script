@@ -1,0 +1,38 @@
+[options]
+allow_bold = true
+# background transparency (requires a compositor)
+#background = rgba(0, 106, 142, 0.95)
+
+font = Ubuntu Mono 11
+
+[colors]
+foreground = rgb(239, 240, 235)
+foreground_bold = rgb(239, 240, 235)
+background = rgba(40, 42, 56, 0.98)
+
+# If unset, will reverse foreground and background
+highlight = #2f2f2f
+
+# Colors from original hyper-snazzy theme
+color0 = rgb(40,42,56)
+color1 = rgb(255,31,23)
+color2 = rgb(15,255,95)
+color3 = rgb(242,255,54)
+color4 = rgb(18,176,255)
+color5 = rgb(255,54,171)
+color6 = rgb(0,189,227)
+# Pinguin und Zeit
+color7 = rgb(241,241,240)
+
+
+# Other default termite colors
+color9 = #d46a6a
+color10 = #c3bf9f
+color11 = #f0dfaf
+# Ordnername
+color12 = #12b0ff
+color13 = #ec93d3
+color14 = #2ae2e8
+color15 = #000000
+# Filenames
+color16 = #ffa300
