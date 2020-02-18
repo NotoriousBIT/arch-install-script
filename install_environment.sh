@@ -84,15 +84,15 @@ chown --recursive $SUDO_USER: .config
 ###########################
 pacman -S --noconfirm zsh ttf-ubuntu-font-family
 
-wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/configs/.zshrc -O /home/$SUDO_USER/.config/.zshrc
+wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/configs/.zshrc -O /home/$SUDO_USER/.zshrc
 chown --recursive $SUDO_USER: .zshrc
 
 # POWERLEVEL10K
 (cd git && git clone https://github.com/romkatv/powerlevel10k.git)
 chown --recursive $SUDO_USER: .git
 
-wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/configs/.p10k.zsh -O /home/$SUDO_USER/.config/.p10k.zsh
-chown --recursive $SUDO_USER: .config
+wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/configs/.p10k.zsh -O /home/$SUDO_USER/.p10k.zsh
+chown --recursive $SUDO_USER: .p10k.zsh
 
 chsh -s $(which zsh) $SUDO_USER
 
@@ -103,6 +103,7 @@ pacman -S --noconfirm nitrogen
 
 git clone https://github.com/NotoriousBIT/arch-install-script.git
 mv ./arch-install-script/wallpaper ./wallpaper
+chown --recursive $SUDO_USER: wallpaper
 rm -rf arch-install-script
 
 mkdir -p /home/$SUDO_USER/.config/nitrogen
