@@ -1,0 +1,36 @@
+XTerm*foreground: #bbc5ff
+XTerm*background: #292d3e
+XTerm*cursorColor: #bbc5ff
+
+! black
+*.color0:       #000000  !! originally #292d3e
+*.color8:       #000000
+
+! red
+*.color1:       rgb(255,31,23)
+*.color9:       rgb(255,31,23)
+
+! green
+*.color2:       rgb(15,255,95)
+*.color10:      rgb(15,255,95)
+
+! yellow
+*.color3:       rgb(242,255,54)
+*.color11:      rgb(242,255,54)
+
+! blue
+*.color4:       rgb(18,176,255)
+*.color12:      rgb(18,176,255)
+
+! magenta
+*.color5:       rgb(255,54,171)
+*.color13:      rgb(255,54,171)
+
+! cyan
+*.color6:       rgb(0,189,227)
+*.color14:      rgb(0,189,227)
+
+! white
+*.color7:       #ffffff
+*.color15:      #ffffff
+
