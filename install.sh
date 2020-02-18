@@ -42,7 +42,7 @@ echo "# /dev/$partition mounted at /mnt"
 
 echo ""
 echo "# Setting mirroslist"
-wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/mirrorlist -O /etc/pacman.d/mirrorlist
+wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/helper/mirrorlist -O /etc/pacman.d/mirrorlist
 
 echo ""
 echo " Installing packages"
@@ -54,7 +54,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 echo ""
 echo " chroot"
-wget -N 192.168.56.1:9000/install_chroot.sh -O /mnt/install_chroot.sh
+wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/install_chroot.sh -O /mnt/install_chroot.sh
 arch-chroot /mnt sh install_chroot.sh
 read input
 
