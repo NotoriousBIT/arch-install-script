@@ -20,7 +20,7 @@ echo LANG=de_DE.UTF-8 > /etc/locale.conf
 
 echo ""
 echo " setting locale.gen"
-wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/locale.gen -O /etc/locale.gen
+wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/helper/locale.gen -O /etc/locale.gen
 locale-gen
 
 echo ""
