@@ -40,7 +40,7 @@ alias la='exa -a --color=always --group-directories-first'  # all files and dirs
 alias ll='exa -la --color=always --group-directories-first'  # long format
 alias lt='exa -aT --color=always --group-directories-first' # tree listing
 
-source /home/testsystem/git/powerlevel10k/powerlevel10k.zsh-theme
+source ~/git/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
