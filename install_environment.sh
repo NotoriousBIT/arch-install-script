@@ -128,6 +128,7 @@ pacman -S --noconfirm exa
 # VIM
 ###########################
 git clone https://github.com/VundleVim/Vundle.vim.git /home/$SUDO_USER/.vim/bundle/Vundle.vim
+chown --recursive $SUDO_USER: .vim
 
 wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/configs/.vimrc -O /home/$SUDO_USER/.vimrc
 chown --recursive $SUDO_USER: .vimrc
