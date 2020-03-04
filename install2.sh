@@ -10,7 +10,7 @@ lsblk
 
 while true; do
   read -p "Specify the name of the device to install to (i.e. /dev/sda) " install_device
-  read -p 'You selcted "$install_device", is this correct? [Y/n] ' yn
+  read -p $"You selcted \"$install_device\", is this correct? [Y/n] " yn
   case $yn in
           [Yy][eE][sS]|[yY] ) break;;
           [Nn][Oo]|[nN] ) ;;
