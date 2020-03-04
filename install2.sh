@@ -21,10 +21,21 @@ done
 # Create partitions
 # 1 500MB Boot
 # 2 100% main
-(echo o; echo d; echo n; echo p; echo 1; echo ""; echo "+500M"; echo n; echo p; echo 2; echo ""; echo ""; echo w) | fdisk $install_device 
+(echo o; echo d; echo n; echo p; echo 1; echo ""; echo "+500M"; echo a; echo 1; echo n; echo p; echo 2; echo ""; echo ""; echo w) | fdisk $install_device 
 
 mkfs.ext2 $install_device"1"
 
 # Setup the encryption of the system
 cryptsetup -c aes-xts-plain64 -y --use-random luksFormat $install_device"2"
 cryptsetup luksOpen $install_device"2" luks
+
+# Create encrypted partitions
+# This creates one partions for root, modify if /home or other partitions should be on separate partitions
+pvcreate /dev/mapper/luks
+vgcreate vg0 /dev/mapper/luks
+lvcreate --size 8G vg0 --name swap
+lvcreate -l +100%FREE vg0 --name root
+
+# Create filesystems on encrypted partitions
+mkfs.ext4 /dev/mapper/vg0-root
+mkswap /dev/mapper/vg0-swap
