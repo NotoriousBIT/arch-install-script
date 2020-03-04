@@ -41,3 +41,37 @@ lvcreate -l +100%FREE vg0 --name root
 # Create filesystems on encrypted partitions
 mkfs.ext4 /dev/mapper/vg0-root
 mkswap /dev/mapper/vg0-swap
+
+# Mount the new system 
+mount /dev/mapper/vg0-root /mnt # /mnt is the installed system
+swapon /dev/mapper/vg0-swap # Not needed but a good thing to test
+mkdir /mnt/boot
+mount $install_device"1" /mnt/boot
+
+echo ""
+echo "# Setting mirroslist"
+wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/helper/mirrorlist -O /etc/pacman.d/mirrorlist
+
+echo ""
+echo " Installing packages"
+pacstrap /mnt base base-devel linux linux-firmware dhcpcd networkmanager wget vim xterm rsync
+
+echo ""
+echo " fstab"
+genfstab -U /mnt >> /mnt/etc/fstab
+
+echo ""
+echo " chroot"
+wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/install_chroot.sh -O /mnt/install_chroot.sh
+arch-chroot /mnt sh install_chroot.sh
+
+umount /mnt
+
+while true; do
+  read -p "Do you wish to reboot? [Y/n] " yn
+  case $yn in
+          [Yy][eE][sS]|[yY] ) reboot; break;;
+          [Nn][Oo]|[nN] ) break;;
+          * ) echo "Please answer yes or no.";;
+  esac
+done
