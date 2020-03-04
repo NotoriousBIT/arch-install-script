@@ -7,3 +7,6 @@
 
 wget https://bit.ly/2SCnxty -O install.sh
 sh install.sh
+
+# sources
+ - https://gist.github.com/mattiaslundberg/8620837
