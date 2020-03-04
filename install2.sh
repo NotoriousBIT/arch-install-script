@@ -21,7 +21,8 @@ done
 # Create partitions
 # 1 500MB Boot
 # 2 100% main
-(echo o; echo d; echo n; echo p; echo 1; echo ""; echo "+500M"; echo a; echo 1; echo n; echo p; echo 2; echo ""; echo ""; echo w) | fdisk $install_device 
+(echo o; echo w) | fdisk $install_device
+(echo d; echo n; echo p; echo 1; echo ""; echo "+500M"; echo a; echo 1; echo n; echo p; echo 2; echo ""; echo ""; echo w) | fdisk $install_device 
 
 mkfs.ext2 $install_device"1"
 
