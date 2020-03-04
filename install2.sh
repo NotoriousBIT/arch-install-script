@@ -17,3 +17,5 @@ while true; do
           * ) echo "Please answer yes or no.";;
   esac
 done
+
+(echo o; echo d; echo n; echo p; echo 1; echo ""; echo "+500M"; echo n; echo p; echo 2; echo ""; echo ""; echo w) | fdisk $install_device 
