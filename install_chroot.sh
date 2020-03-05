@@ -39,5 +39,6 @@ passwd
 echo ""
 echo " installing grub"
 pacman -S --noconfirm grub
-grub-install /dev/sda
-grub-mkconfig -o /boot/grub/grub.cfg
+blkid | grep "LUKS" | cut -d ':' -f1
+#grub-install /dev/sda
+#grub-mkconfig -o /boot/grub/grub.cfg
