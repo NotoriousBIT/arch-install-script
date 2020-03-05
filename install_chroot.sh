@@ -39,6 +39,7 @@ passwd
 echo ""
 echo " installing grub"
 pacman -S --noconfirm grub
-blkid | grep "LUKS" | cut -d ':' -f1
-#grub-install /dev/sda
-#grub-mkconfig -o /boot/grub/grub.cfg
+LUKS_PARTITION=$(blkid | grep "LUKS" | cut -d ':' -f1)
+sed -i "s|GRUB_CMDLINE_LINUX=\"\"|GRUB_CMDLINE_LINUX=\"$LUKS_PARTITION\"|" /mnt/etc/default/grub
+grub-install /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg
