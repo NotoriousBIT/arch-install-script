@@ -40,6 +40,6 @@ echo ""
 echo " installing grub"
 pacman -S --noconfirm grub
 LUKS_PARTITION=$(blkid | grep "LUKS" | cut -d ':' -f1)
-sed -i "s|GRUB_CMDLINE_LINUX=\"\"|GRUB_CMDLINE_LINUX=\"cryptdevice=$LUKS_PARTITION:luks:allow-discards\"|" /mnt/etc/default/grub
+sed -i "s|GRUB_CMDLINE_LINUX=\"\"|GRUB_CMDLINE_LINUX=\"cryptdevice=$LUKS_PARTITION:luks:allow-discards\"|" /etc/default/grub
 grub-install /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
