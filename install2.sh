@@ -25,7 +25,7 @@ wipefs -af $install_device
 (echo o; echo w) | fdisk $install_device
 (echo d; echo n; echo p; echo 1; echo ""; echo "+500M"; echo a; echo n; echo p; echo 2; echo ""; echo ""; echo w) | fdisk $install_device 
 
-mkfs.ext2 $install_device"1"
+mkfs.ext2 $install_device"1" -L boot
 
 # Setup the encryption of the system
 cryptsetup -c aes-xts-plain64 -y --use-random luksFormat $install_device"2"
@@ -39,8 +39,8 @@ lvcreate --size 8G vg0 --name swap
 lvcreate -l +100%FREE vg0 --name root
 
 # Create filesystems on encrypted partitions
-mkfs.ext4 /dev/mapper/vg0-root
-mkswap /dev/mapper/vg0-swap
+mkfs.ext4 /dev/mapper/vg0-root -L crypt
+mkswap /dev/mapper/vg0-swap -L swap
 
 # Mount the new system 
 mount /dev/mapper/vg0-root /mnt # /mnt is the installed system
