@@ -72,7 +72,7 @@ lvcreate -L 30GB vg0 -n lv_root
 lvcreate -l 100%FREE vg0 -n lv_home
 
 mkfs.ext4 -L root /dev/vg0/lv_root
-mount /dev/volgroup0/lv_root /mnt
+mount /dev/vg0/lv_root /mnt
 
 mkdir /mnt/home
 mkfs.ext4 -L home /dev/vg0/lv_home
