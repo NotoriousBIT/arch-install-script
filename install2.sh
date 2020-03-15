@@ -46,10 +46,10 @@ wipefs -af $install_device
 (echo t; echo 3; echo $LINUX_LVM_NUMBER; echo w) | fdisk $install_device 
 
 # Get partition names
-PARTITION_EFI=$(fdisk -l $install_device | grep "500M EFI-System" | grep -oP "^[a-z0-9\/]+")
+PARTITION_EFI=$(fdisk -l $install_device | grep "500M EFI System" | grep -oP "^[a-z0-9\/]+")
 echo "EFI partition is @ $PARTITION_EFI"
 
-PARTITION_BOOT=$(fdisk -l $install_device | grep "500M Linux-Dateisystem" | grep -oP "^[a-z0-9\/]+")
+PARTITION_BOOT=$(fdisk -l $install_device | grep "500M Linux filesystem" | grep -oP "^[a-z0-9\/]+")
 echo "Boot partition is @ $PARTITION_BOOT"
 
 PARTITION_LVM=$(fdisk -l $install_device | grep "Linux LVM" | grep -oP "^[a-z0-9\/]+")
