@@ -74,8 +74,9 @@ lvcreate -l 100%FREE vg0 -n lv_home
 mkfs.ext4 -L root /dev/vg0/lv_root
 mount /dev/vg0/lv_root /mnt
 
-mkdir /mnt/home
 mkfs.ext4 -L home /dev/vg0/lv_home
+mkdir /mnt/home
+mount /dev/vg0/lv_home /mnt/home
 
 mkdir /mnt/boot
 mount $PARTITION_BOOT /mnt/boot
