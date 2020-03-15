@@ -24,9 +24,9 @@ done
 # 3 100% main
 
 # Get the corrosponding numbers of fdisk partition types
-EFI_SYSTEM_NUMBER=(echo l; echo q) | sudo fdisk /dev/sdc | grep -oP "[0-9]+(?= EFI System)"
-LINUX_FILESYSTEM_NUMBER=(echo l; echo q) | sudo fdisk /dev/sdc | grep -oP "[0-9]+(?= Linux filesystem )"
-LINUX_LVM_NUMBER=(echo l; echo q) | sudo fdisk /dev/sdc | grep -oP "[0-9]+(?= Linux LVM)"
+EFI_SYSTEM_NUMBER=$(echo "l" | fdisk $install_device | grep -oP "[0-9]+(?= EFI System )")
+LINUX_FILESYSTEM_NUMBER=$(echo "l" | fdisk $install_device | grep -oP "[0-9]+(?= Linux filesystem )")
+LINUX_LVM_NUMBER=$(echo "l" | fdisk $install_device | grep -oP "[0-9]+(?= Linux LVM)")
 
 # Wipe the disk
 wipefs -af $install_device
@@ -45,30 +45,55 @@ wipefs -af $install_device
 (echo n; echo 3; echo ""; echo ""; echo w) | fdisk $install_device 
 (echo t; echo 3; echo $LINUX_LVM_NUMBER; echo w) | fdisk $install_device 
 
+# Get partition names
+PARTITION_EFI=$(fdisk -l $install_device | grep "500M EFI-System" | grep -oP "^[a-z0-9\/]+")
+echo "EFI partition is @ $PARTITION_EFI"
 
+PARTITION_BOOT=$(fdisk -l $install_device | grep "500M Linux-Dateisystem" | grep -oP "^[a-z0-9\/]+")
+echo "Boot partition is @ $PARTITION_BOOT"
 
-mkfs.ext2 $install_device"1" -L boot
+PARTITION_LVM=$(fdisk -l $install_device | grep "Linux LVM" | grep -oP "^[a-z0-9\/]+")
+echo "LVM partition is @ $PARTITION_LVM"
 
-# Setup the encryption of the system
-cryptsetup -c aes-xts-plain64 -y --use-random luksFormat $install_device"2"
-cryptsetup luksOpen $install_device"2" luks
+# Format the EFI partition
+mkfs.fat -n EFI -F32 $PARTITION_EFI
 
-# Create encrypted partitions
-# This creates one partions for root, modify if /home or other partitions should be on separate partitions
-pvcreate /dev/mapper/luks
-vgcreate vg0 /dev/mapper/luks
-lvcreate --size 8G vg0 --name swap
-lvcreate -l +100%FREE vg0 --name root
+# Format the boot partition
+mkfs.ext4 -L BOOT $PARTITION_BOOT
 
-# Create filesystems on encrypted partitions
-mkfs.ext4 /dev/mapper/vg0-root -L crypt
-mkswap /dev/mapper/vg0-swap -L swap
+# Set up encryption
+cryptsetup luksFormat $PARTITION_LVM
+cryptsetup open --type luks $PARTITION_LVM lvm
 
-# Mount the new system 
-mount /dev/mapper/vg0-root /mnt # /mnt is the installed system
-swapon /dev/mapper/vg0-swap # Not needed but a good thing to test
+pvcreate --dataalignment 1m /dev/mapper/lvm
+vgcreate vg0 /dev/mapper/lvm
+
+lvcreate -L 30GB vg0 -n lv_root
+lvcreate -l 100%FREE vg0 -n lv_home
+
+mkfs.ext4 -L root /dev/vg0/lv_root
+mount /dev/volgroup0/lv_root /mnt
+
+mkdir /mnt/home
+mkfs.ext4 -L home /dev/vg0/lv_home
+
 mkdir /mnt/boot
-mount $install_device"1" /mnt/boot
+mount $PARTITION_BOOT /mnt/boot
+
+mkdir /mnt/etc
+genfstab -U -p /mnt >> /mnt/etc/fstab
+
+
+while true; do
+  cat /mnt/etc/fstab
+  read -p "Are all the partition looking correct? [Y/n] " yn
+  case $yn in
+          [Yy][eE][sS]|[yY] ) break;;
+          [Nn][Oo]|[nN] ) exit;;
+          * ) echo "Please answer yes or no.";;
+  esac
+done
+
 
 echo ""
 echo "# Setting mirroslist"
