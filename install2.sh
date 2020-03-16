@@ -28,6 +28,10 @@ EFI_SYSTEM_NUMBER=$(echo "l" | fdisk $install_device | grep -oP "[0-9]+(?= EFI S
 LINUX_FILESYSTEM_NUMBER=$(echo "l" | fdisk $install_device | grep -oP "[0-9]+(?= Linux filesystem )")
 LINUX_LVM_NUMBER=$(echo "l" | fdisk $install_device | grep -oP "[0-9]+(?= Linux LVM)")
 
+echo "EFI_SYSTEM_NUMBER $EFI_SYSTEM_NUMBER"
+echo "LINUX_FILESYSTEM_NUMBER $LINUX_FILESYSTEM_NUMBER"
+echo "LINUX_LVM_NUMBER $LINUX_LVM_NUMBER"
+
 # Wipe the disk
 wipefs -af $install_device
 
