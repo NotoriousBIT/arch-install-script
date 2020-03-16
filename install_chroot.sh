@@ -6,6 +6,8 @@ echo "127.0.0.1	localhost" > /etc/hosts
 echo "::1 localhost" >> /etc/hosts
 echo "127.0.0.1	$hostname.localdomain $hostname" >> /etc/hosts
 
+#dhcpcd networkmanager wget vim xterm rsync
+
 echo ""
 echo " enable dhcpcd"
 systemctl enable dhcpcd
