@@ -6,7 +6,7 @@ echo "127.0.0.1	localhost" > /etc/hosts
 echo "::1 localhost" >> /etc/hosts
 echo "127.0.0.1	$hostname.localdomain $hostname" >> /etc/hosts
 
-#dhcpcd networkmanager wget vim xterm rsync
+pacman -S --noconfirm networkmanager dhcpcd wpa_supplicant wireless_tools netctl wget vim xterm rsync lvm2
 
 echo ""
 echo " enable dhcpcd"
@@ -38,10 +38,25 @@ echo ""
 echo " setting root password:"
 passwd
 
+pacman -S --noconfirm lvm2
+sed -i "s|HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)|HOOKS=(base udev autodetect modconf block encrypt lvm2 filesystems keyboard fsck)|g" /etc/mkinitcpio.conf 
+
+mkinitcpio -p linux
+
 echo ""
 echo " installing grub"
-pacman -S --noconfirm grub
+pacman -S --noconfirm grub efibootmgr dosfstools os-prober mtools
 LUKS_PARTITION=$(blkid | grep "LUKS" | cut -d ':' -f1)
-sed -i "s|GRUB_CMDLINE_LINUX=\"\"|GRUB_CMDLINE_LINUX=\"cryptdevice=$LUKS_PARTITION:luks:allow-discards\"|" /etc/default/grub
-grub-install /dev/sda
-grub-mkconfig -o /boot/grub/grub.cfg
+#sed -i "s|GRUB_CMDLINE_LINUX=\"\"|GRUB_CMDLINE_LINUX=\"cryptdevice=$LUKS_PARTITION:vg0:allow-discards\"|" /etc/default/grub
+
+echo "lukes: $LUKS_PARTITION"
+
+cat /etc/default/grub
+
+#echo ""
+#echo " installing grub"
+#pacman -S --noconfirm grub
+#LUKS_PARTITION=$(blkid | grep "LUKS" | cut -d ':' -f1)
+#sed -i "s|GRUB_CMDLINE_LINUX=\"\"|GRUB_CMDLINE_LINUX=\"cryptdevice=$LUKS_PARTITION:luks:allow-discards\"|" /etc/default/grub
+#grub-install /dev/sda
+#grub-mkconfig -o /boot/grub/grub.cfg
