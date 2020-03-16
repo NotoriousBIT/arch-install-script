@@ -51,7 +51,7 @@ LUKS_PARTITION=$(blkid | grep "LUKS" | cut -d ':' -f1)
 
 echo "lukes: $LUKS_PARTITION"
 
-cat /etc/default/grub
+#cat /etc/default/grub
 
 #echo ""
 #echo " installing grub"
