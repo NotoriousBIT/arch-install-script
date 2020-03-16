@@ -6,7 +6,7 @@ echo "127.0.0.1	localhost" > /etc/hosts
 echo "::1 localhost" >> /etc/hosts
 echo "127.0.0.1	$hostname.localdomain $hostname" >> /etc/hosts
 
-pacman -S --noconfirm networkmanager dhcpcd wpa_supplicant wireless_tools netctl wget vim xterm rsync lvm2
+pacman -S --noconfirm networkmanager dhcpcd wpa_supplicant wireless_tools netctl wget vim xterm rsync
 
 echo ""
 echo " enable dhcpcd"
@@ -38,14 +38,10 @@ echo ""
 echo " setting root password:"
 passwd
 
-pacman -S --noconfirm lvm2
+pacman -S --noconfirm grub efibootmgr dosfstools os-prober mtools lvm2
 sed -i "s|HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)|HOOKS=(base udev autodetect modconf block encrypt lvm2 filesystems keyboard fsck)|" /etc/mkinitcpio.conf 
 
 mkinitcpio -p linux
-
-echo ""
-echo " installing grub"
-pacman -S --noconfirm grub efibootmgr dosfstools os-prober mtools
 
 sed -i "s|#GRUB_ENABLE_CRYPTODISK=y|GRUB_ENABLE_CRYPTODISK=y|" /etc/default/grub
 
