@@ -38,10 +38,12 @@ echo ""
 echo " setting root password:"
 passwd
 
+echo "-----------------------------------------------------"
+
 pacman -S --noconfirm grub efibootmgr dosfstools os-prober mtools lvm2
 sed -i "s|HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)|HOOKS=(base udev autodetect modconf block encrypt lvm2 filesystems keyboard fsck)|" /etc/mkinitcpio.conf 
 
-mkinitcpio -p linux
+#mkinitcpio -p linux
 
 sed -i "s|#GRUB_ENABLE_CRYPTODISK=y|GRUB_ENABLE_CRYPTODISK=y|" /etc/default/grub
 
