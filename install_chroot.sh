@@ -46,17 +46,10 @@ mkinitcpio -p linux
 echo ""
 echo " installing grub"
 pacman -S --noconfirm grub efibootmgr dosfstools os-prober mtools
+
+sed -i "s|#GRUB_ENABLE_CRYPTODISK=y|GRUB_ENABLE_CRYPTODISK=y|"
+
 LUKS_PARTITION=$(blkid | grep "LUKS" | cut -d ':' -f1)
-#sed -i "s|GRUB_CMDLINE_LINUX=\"\"|GRUB_CMDLINE_LINUX=\"cryptdevice=$LUKS_PARTITION:vg0:allow-discards\"|" /etc/default/grub
+sed -i "s|GRUB_CMDLINE_LINUX_DEFAULT=|GRUB_CMDLINE_LINUX_DEFAULT=\"loglevel=3 cryptdevice=$LUKS_PARTITION:vg0:allow-discards quiet\"|" /etc/default/grub
 
-echo "lukes: $LUKS_PARTITION"
-
-#cat /etc/default/grub
-
-#echo ""
-#echo " installing grub"
-#pacman -S --noconfirm grub
-#LUKS_PARTITION=$(blkid | grep "LUKS" | cut -d ':' -f1)
-#sed -i "s|GRUB_CMDLINE_LINUX=\"\"|GRUB_CMDLINE_LINUX=\"cryptdevice=$LUKS_PARTITION:luks:allow-discards\"|" /etc/default/grub
-#grub-install /dev/sda
-#grub-mkconfig -o /boot/grub/grub.cfg
+mkdir /boot/EFI
