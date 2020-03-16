@@ -109,14 +109,13 @@ echo " chroot"
 wget  -O /mnt/install_chroot.sh https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/install_chroot.sh
 arch-chroot /mnt sh install_chroot.sh
 
-# umount -R /mnt
-# swapoff -a
+umount -a
 
-# while true; do
-#   read -p "Do you wish to reboot? [Y/n] " yn
-#   case $yn in
-#           [Yy][eE][sS]|[yY] ) reboot; break;;
-#           [Nn][Oo]|[nN] ) break;;
-#           * ) echo "Please answer yes or no.";;
-#   esac
-# done
+while true; do
+  read -p "Do you wish to reboot? [Y/n] " yn
+  case $yn in
+          [Yy][eE][sS]|[yY] ) reboot; break;;
+          [Nn][Oo]|[nN] ) break;;
+          * ) echo "Please answer yes or no.";;
+  esac
+done
