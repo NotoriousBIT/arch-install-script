@@ -102,15 +102,11 @@ wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/maste
 
 echo ""
 echo " Installing packages"
-pacstrap /mnt base base-devel linux linux-firmware dhcpcd networkmanager wget vim xterm rsync
-
-echo ""
-echo " fstab"
-genfstab -U /mnt >> /mnt/etc/fstab
+pacstrap /mnt base base-devel linux linux-firmware
 
 echo ""
 echo " chroot"
-wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/install_chroot.sh -O /mnt/install_chroot.sh
+wget  -O /mnt/install_chroot.sh https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/install_chroot.sh
 arch-chroot /mnt sh install_chroot.sh
 
 umount -R /mnt
