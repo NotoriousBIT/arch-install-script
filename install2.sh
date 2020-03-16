@@ -102,7 +102,7 @@ wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/maste
 
 echo ""
 echo " Installing packages"
-pacstrap /mnt base base-devel linux linux-firmware
+pacstrap /mnt base base-devel linux linux-firmware linux-headers
 
 echo ""
 echo " chroot"
