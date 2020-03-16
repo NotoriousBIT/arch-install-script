@@ -38,16 +38,17 @@ echo ""
 echo " setting root password:"
 passwd
 
-echo "-----------------------------------------------------"
-
 pacman -S --noconfirm grub efibootmgr dosfstools os-prober mtools lvm2
 sed -i "s|HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)|HOOKS=(base udev autodetect modconf block encrypt lvm2 filesystems keyboard fsck)|" /etc/mkinitcpio.conf 
 
-#mkinitcpio -p linux
+mkinitcpio -p linux
 
 sed -i "s|#GRUB_ENABLE_CRYPTODISK=y|GRUB_ENABLE_CRYPTODISK=y|" /etc/default/grub
 
 LUKS_PARTITION=$(blkid | grep "LUKS" | cut -d ':' -f1)
-sed -i "s|GRUB_CMDLINE_LINUX_DEFAULT=|GRUB_CMDLINE_LINUX_DEFAULT=\"loglevel=3 cryptdevice=$LUKS_PARTITION:vg0:allow-discards quiet\"|" /etc/default/grub
+sed -i "s|GRUB_CMDLINE_LINUX_DEFAULT=\"loglevel=3 quiet\"|GRUB_CMDLINE_LINUX_DEFAULT=\"loglevel=3 cryptdevice=$LUKS_PARTITION:vg0:allow-discards quiet\"|" /etc/default/grub
 
 mkdir /boot/EFI
+EFI_PARTITION=$(blkid | grep "LABEL=\"EFI\"" | cut -d ':' -f1)
+
+echo "EFI @ $EFI_PARTITION"
