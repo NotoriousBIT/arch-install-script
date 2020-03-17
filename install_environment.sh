@@ -1,6 +1,11 @@
 #!/bin/bash
 
 ###########################
+# pulseaudio
+###########################
+pacman -S --noconfirm pulseaudio pavucontrol
+
+###########################
 # GIT
 ###########################
 pacman -S --noconfirm git
