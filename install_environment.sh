@@ -6,6 +6,11 @@
 pacman -S --noconfirm pulseaudio pavucontrol
 
 ###########################
+# nvidia
+###########################
+pacman -S --noconfirm nvidia nvidia-settings
+
+###########################
 # GIT
 ###########################
 pacman -S --noconfirm git
