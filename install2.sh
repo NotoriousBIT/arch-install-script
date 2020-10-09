@@ -72,8 +72,8 @@ cryptsetup open --type luks $PARTITION_LVM lvm
 pvcreate --dataalignment 1m /dev/mapper/lvm
 vgcreate vg0 /dev/mapper/lvm
 
-lvcreate -L 30GB vg0 -n lv_root
-lvcreate -l 100%FREE vg0 -n lv_home
+lvcreate -L 100GB vg0 -n lv_home
+lvcreate -L 100%FREE vg0 -n lv_root
 
 mkfs.ext4 -L root /dev/vg0/lv_root
 mount /dev/vg0/lv_root /mnt
