@@ -1,0 +1,10 @@
+---
+  - hosts: localhost
+    become: yes
+    tasks:
+      - name: Install the latest version of Apache and MariaDB
+      package:
+        name:
+          - pulseaudio
+          - pavucontrol
+        state: present
