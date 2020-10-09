@@ -60,9 +60,9 @@ cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
 
  grub-mkconfig -o /boot/grub/grub.cfg
  
- # Create swap file
- fallocate -l 2G /swapfile
- chmod 600 /swapfile
- mkswap -L SWAPFILE /swapfile
+#  # Create swap file
+#  fallocate -l 2G /swapfile
+#  chmod 600 /swapfile
+#  mkswap -L SWAPFILE /swapfile
  
- echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
+#  echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
