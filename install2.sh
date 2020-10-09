@@ -38,16 +38,16 @@ wipefs -af $install_device
 (echo g; echo w) | fdisk $install_device
 
 # Create partition 1
-(echo n; echo 1; echo ""; echo "+500M"; echo w) | fdisk $install_device 
-(echo t; echo $EFI_SYSTEM_NUMBER; echo w) | fdisk $install_device 
+(echo n; echo 1; echo ""; echo "+500M"; echo w) | fdisk $install_device
+(echo t; echo $EFI_SYSTEM_NUMBER; echo w) | fdisk $install_device
 
 # Create partition 2
-(echo n; echo 2; echo ""; echo "+500M"; echo w) | fdisk $install_device 
-(echo t; echo 2; echo $LINUX_FILESYSTEM_NUMBER; echo w) | fdisk $install_device 
+(echo n; echo 2; echo ""; echo "+500M"; echo w) | fdisk $install_device
+(echo t; echo 2; echo $LINUX_FILESYSTEM_NUMBER; echo w) | fdisk $install_device
 
 # Create partition 3
-(echo n; echo 3; echo ""; echo ""; echo w) | fdisk $install_device 
-(echo t; echo 3; echo $LINUX_LVM_NUMBER; echo w) | fdisk $install_device 
+(echo n; echo 3; echo ""; echo ""; echo w) | fdisk $install_device
+(echo t; echo 3; echo $LINUX_LVM_NUMBER; echo w) | fdisk $install_device
 
 # Get partition names
 PARTITION_EFI=$(fdisk -l $install_device | grep "500M EFI System" | grep -oP "^[a-z0-9\/]+")
@@ -110,16 +110,16 @@ pacstrap /mnt base base-devel linux linux-firmware linux-headers
 
 echo ""
 echo " chroot"
-wget  -O /mnt/install_chroot.sh https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/install_chroot.sh
-arch-chroot /mnt sh install_chroot.sh
+# wget  -O /mnt/install_chroot.sh https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/install_chroot.sh
+# arch-chroot /mnt sh install_chroot.sh
 
-umount -a
+# umount -a
 
-while true; do
-  read -p "Do you wish to reboot? [Y/n] " yn
-  case $yn in
-          [Yy][eE][sS]|[yY] ) reboot; break;;
-          [Nn][Oo]|[nN] ) break;;
-          * ) echo "Please answer yes or no.";;
-  esac
-done
+# while true; do
+#   read -p "Do you wish to reboot? [Y/n] " yn
+#   case $yn in
+#           [Yy][eE][sS]|[yY] ) reboot; break;;
+#           [Nn][Oo]|[nN] ) break;;
+#           * ) echo "Please answer yes or no.";;
+#   esac
+# done
