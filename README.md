@@ -19,7 +19,7 @@ For changing the keyboad layout to germen type in<br>
 [-] = [?] on english keyboard
 
 ## Step 4: Download and run the first install script
-`$ curl https://bit.ly/2wvMT3q -L -o install.sh` <br>
+`$ curl https://bit.ly/2SCnxty -L -o install.sh` <br>
 `$ sh install.sh`
 
 >**NOTE**
