@@ -102,7 +102,7 @@ done
 
 echo ""
 echo "# Setting mirroslist"
-wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/helper/mirrorlist -O /etc/pacman.d/mirrorlist
+curl -L https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/helper/mirrorlist -o /etc/pacman.d/mirrorlist
 
 echo ""
 echo " Installing packages"
@@ -110,7 +110,7 @@ pacstrap /mnt base base-devel linux linux-firmware linux-headers
 
 echo ""
 echo " chroot"
-wget  -O /mnt/install_chroot.sh https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/install_chroot.sh
+curl -L https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/install_chroot.sh -o /mnt/install_chroot.sh
 arch-chroot /mnt sh install_chroot.sh
 
 umount -a

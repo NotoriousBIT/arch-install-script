@@ -39,7 +39,7 @@ echo " setting root password:"
 passwd
 
 pacman -S --noconfirm grub efibootmgr dosfstools os-prober mtools lvm2
-sed -i "s|HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)|HOOKS=(base udev autodetect modconf block encrypt lvm2 filesystems keyboard fsck)|" /etc/mkinitcpio.conf 
+sed -i "s|HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)|HOOKS=(base udev autodetect modconf block encrypt lvm2 filesystems keyboard fsck)|" /etc/mkinitcpio.conf
 
 mkinitcpio -p linux
 
