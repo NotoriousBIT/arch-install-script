@@ -16,6 +16,7 @@
             - xorg-drivers
             - xorg-xinit
             - lightdm
+            - lightdm-gtk-greeter
             - lightdm-webkit2-greeter
             - light-locker
             - awesome
