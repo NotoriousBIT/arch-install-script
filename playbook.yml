@@ -21,6 +21,12 @@
             - awesome
           state: present
 
+      - name: Enable service lightdm and ensure it is not masked
+        systemd:
+          name: lightdm
+          enabled: yes
+          masked: no
+
           #!/bin/bash
 
 
