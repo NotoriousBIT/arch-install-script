@@ -1,5 +1,5 @@
 #!/bin/bash
-pacman -S --noconfirm ansible
+sudo pacman -S --noconfirm ansible
 
 mkdir -p /tmp/arch-install-script
 
