@@ -20,6 +20,7 @@
           src: "{{ ansible_env.HOME }}/git/Dotfiles/etc/X11/xorg.conf.d/20-keyboard.conf"
           dest: /etc/X11/xorg.conf.d/20-keyboard.conf
           state: link
+          force: yes
 
       - name: Install audio software
         become: yes
@@ -82,6 +83,7 @@
           src: "{{ ansible_env.HOME }}/git/Dotfiles/etc/lightdm/lightdm.conf"
           dest: /etc/lightdm/lightdm.conf
           state: link
+          force: yes
 
       - name: Set lightdm-webkit2-greeter config
         become: yes
@@ -89,6 +91,7 @@
           src: "{{ ansible_env.HOME }}/git/Dotfiles/etc/lightdm/lightdm-webkit2-greeter.conf"
           dest: /etc/lightdm/lightdm-webkit2-greeter.conf
           state: link
+          force: yes
 
       - name: Install awesome
         become: yes
