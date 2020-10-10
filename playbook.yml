@@ -2,24 +2,12 @@
   - hosts: localhost
     tasks:
 
-# ###########################
-# # KEYBOARD LAYOUT DE
-# ###########################
-# echo 'Section "InputClass"' > /etc/X11/xorg.conf.d/20-keyboard.conf
-# echo '       Identifier "keyboard"' >> /etc/X11/xorg.conf.d/20-keyboard.conf
-# echo '       MatchIsKeyboard "yes"' >> /etc/X11/xorg.conf.d/20-keyboard.conf
-# echo '       Option "XkbLayout" "de"' >> /etc/X11/xorg.conf.d/20-keyboard.conf
-# echo '       Option "XkbVariant" "nodeadkeys"' >> /etc/X11/xorg.conf.d/20-keyboard.conf
-# echo 'EndSection' >> /etc/X11/xorg.conf.d/20-keyboard.conf
-
       - name: Install git
         become: yes
         package:
           name:
             - git
           state: present
-
-
 
       - name: Download Dotconfig repo
         git:
@@ -88,10 +76,19 @@
           enabled: yes
           masked: no
 
-          # pacman -S --noconfirm lightdm lightdm-webkit2-greeter light-locker
+      - name: Set lightdm config
+        become: yes
+        file:
+          src: "{{ ansible_env.HOME }}/git/Dotfiles/etc/lightdm/lightdm.conf"
+          dest: /etc/lightdm/lightdm.conf
+          state: link
 
-# wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/helper/lightdm/lightdm.conf -O /etc/lightdm/lightdm.conf
-# wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/helper/lightdm/lightdm-webkit2-greeter.conf -O /etc/lightdm/lightdm-webkit2-greeter.conf
+      - name: Set lightdm-webkit2-greeter config
+        become: yes
+        file:
+          src: "{{ ansible_env.HOME }}/git/Dotfiles/etc/lightdm/lightdm-webkit2-greeter.conf"
+          dest: /etc/lightdm/lightdm-webkit2-greeter.conf
+          state: link
 
       - name: Install awesome
         become: yes
