@@ -11,13 +11,25 @@
 # echo '       Option "XkbLayout" "de"' >> /etc/X11/xorg.conf.d/20-keyboard.conf
 # echo '       Option "XkbVariant" "nodeadkeys"' >> /etc/X11/xorg.conf.d/20-keyboard.conf
 # echo 'EndSection' >> /etc/X11/xorg.conf.d/20-keyboard.conf
-      
 
+      - name: Install git
+        become: yes
+        package:
+          name:
+            - git
+          state: present
 
       - name: Download Dotconfig repo
         git:
           repo: https://github.com/NotoriousBIT/Dotfiles.git
           dest: ~/git/Dotfiles
+
+      - name: Set keyboard layout DE
+        become: yes
+        file:
+          src: ~/git/Dotfiles/etc/X11/xorg.conf.d/20-keyboard.conf
+          dest: /etc/X11/xorg.conf.d/20-keyboard.conf
+          state: link
 
       - name: Install audio software
         become: yes
@@ -25,13 +37,6 @@
           name:
             - pulseaudio
             - pavucontrol
-          state: present
-
-      - name: Install git
-        become: yes
-        package:
-          name:
-            - git
           state: present
 
       - name: Install video software
