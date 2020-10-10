@@ -1,25 +1,78 @@
 ---
   - hosts: localhost
     tasks:
-      - name: Install additional software
+
+# ###########################
+# # KEYBOARD LAYOUT DE
+# ###########################
+# echo 'Section "InputClass"' > /etc/X11/xorg.conf.d/20-keyboard.conf
+# echo '       Identifier "keyboard"' >> /etc/X11/xorg.conf.d/20-keyboard.conf
+# echo '       MatchIsKeyboard "yes"' >> /etc/X11/xorg.conf.d/20-keyboard.conf
+# echo '       Option "XkbLayout" "de"' >> /etc/X11/xorg.conf.d/20-keyboard.conf
+# echo '       Option "XkbVariant" "nodeadkeys"' >> /etc/X11/xorg.conf.d/20-keyboard.conf
+# echo 'EndSection' >> /etc/X11/xorg.conf.d/20-keyboard.conf
+      
+
+
+      - name: Download Dotconfig repo
+        git:
+          repo: https://github.com/NotoriousBIT/Dotfiles.git
+          dest: ~/git/Dotfiles
+
+      - name: Install audio software
         become: yes
         package:
           name:
             - pulseaudio
             - pavucontrol
+          state: present
+
+      - name: Install git
+        become: yes
+        package:
+          name:
             - git
+          state: present
+
+      - name: Install video software
+        become: yes
+        package:
+          name:
             - nvidia
             - nvidia-settings
+          state: present
+
+      - name: Install network software
+        become: yes
+        package:
+          name:
             - nm-connection-editor
+          state: present
+
+      - name: Install go
+        become: yes
+        package:
+          name:
             - go
+          state: present
+
+      - name: Install xorg
+        become: yes
+        package:
+          name:
             - xorg
             - xorg-drivers
             - xorg-xinit
+          state: present
+
+      - name: Install light-dm
+        become: yes
+        package:
+          name:
             - lightdm
             - lightdm-gtk-greeter
             - lightdm-webkit2-greeter
             - light-locker
-            - awesome
           state: present
 
       - name: Enable service lightdm and ensure it is not masked
@@ -27,6 +80,20 @@
           name: lightdm
           enabled: yes
           masked: no
+
+          # pacman -S --noconfirm lightdm lightdm-webkit2-greeter light-locker
+
+# wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/helper/lightdm/lightdm.conf -O /etc/lightdm/lightdm.conf
+# wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/helper/lightdm/lightdm-webkit2-greeter.conf -O /etc/lightdm/lightdm-webkit2-greeter.conf
+
+      - name: Install awesome
+        become: yes
+        package:
+          name:
+            - awesome
+          state: present
+
+
 
           #!/bin/bash
 
