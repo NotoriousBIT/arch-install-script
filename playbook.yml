@@ -19,15 +19,17 @@
             - git
           state: present
 
+
+
       - name: Download Dotconfig repo
         git:
           repo: https://github.com/NotoriousBIT/Dotfiles.git
-          dest: ~/git/Dotfiles
+          dest: "{{ ansible_env.HOME }}/git/Dotfiles"
 
       - name: Set keyboard layout DE
         become: yes
         file:
-          src: ~/git/Dotfiles/etc/X11/xorg.conf.d/20-keyboard.conf
+          src: "{{ ansible_env.HOME }}/git/Dotfiles/etc/X11/xorg.conf.d/20-keyboard.conf"
           dest: /etc/X11/xorg.conf.d/20-keyboard.conf
           state: link
 
