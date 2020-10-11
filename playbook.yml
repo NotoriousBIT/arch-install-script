@@ -1,5 +1,7 @@
 ---
   - hosts: localhost
+    roles:
+      - kewlfft.aur
     tasks:
 
       - name: Install aur from ansible galaxy
