@@ -12,7 +12,8 @@
           state: present
 
       - name: Install yay
-        jonsible.yay:
+        include_role:
+          name: jonsible.yay
 
       # - name: Download yay
       #   git:
