@@ -177,6 +177,7 @@
           name:
             - zsh-theme-powerlevel10k-git
             - ttf-font-awesome
+            - ttf-meslo-nerd-font-powerlevel10k
           state: present
           use: yay
 
