@@ -2,6 +2,10 @@
   - hosts: localhost
     tasks:
 
+      - name: Install aur from ansible galaxy
+        shell:
+          cmd: ansible-galaxy install kewlfft.aur
+
       - name: Install git
         become: yes
         package:
@@ -89,7 +93,7 @@
 
       - name: Install theme litarvan
         become: yes
-        package:
+        aur:
           name:
             - lightdm-webkit-theme-litarvan
           state: present
