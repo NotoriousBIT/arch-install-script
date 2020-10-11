@@ -16,16 +16,16 @@
           repo: https://aur.archlinux.org/yay.git
           dest: "{{ ansible_env.HOME }}/git/yay"
 
-      - name: Build yay
+      - name: Install yay
         shell:
-          cmd: makepkg -sf --noconfirm
+          cmd: makepkg -isf --noconfirm
           chdir: "{{ ansible_env.HOME }}/git/yay"
 
-      - name: Install yay
-        become: yes
-        shell:
-          cmd: pacman -U *.pkg.tar.zst --noconfirm
-          chdir: "{{ ansible_env.HOME }}/git/yay"
+      # - name: Install yay
+      #   become: yes
+      #   shell:
+      #     cmd: pacman -U *.pkg.tar.zst --noconfirm
+      #     chdir: "{{ ansible_env.HOME }}/git/yay"
 
       - name: Download Dotconfig repo
         git:
@@ -98,6 +98,7 @@
           use: yay
 
       - name: Enable service lightdm and ensure it is not masked
+        become: yes
         systemd:
           name: lightdm
           enabled: yes
