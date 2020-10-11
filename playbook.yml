@@ -15,7 +15,6 @@
           dest: "{{ ansible_env.HOME }}/git/yay"
 
       - name: Build yay
-        become: yes
         shell:
           cmd: makepkg -sf
           chdir: "{{ ansible_env.HOME }}/git/yay"
