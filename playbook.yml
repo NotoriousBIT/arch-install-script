@@ -80,7 +80,7 @@
 
       - name: Install theme litarvan
         become: yes
-          name:
+          package:
             - lightdm-webkit-theme-litarvan
           state: present
           use: yay
