@@ -153,6 +153,18 @@
             - nitrogen
           state: present
 
+      - name: Install zsh
+        become: yes
+        package:
+          name:
+            - zsh
+          state: present
+
+      - name: Set default shell to zsh
+        become: yes
+        shell:
+          cmd: "chsh -s $(which zsh) {{ lookup('env', 'USER') }}""
+
 
 
 
