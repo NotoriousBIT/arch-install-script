@@ -160,10 +160,34 @@
             - zsh
           state: present
 
+      - name: Link .zshrc
+        become: yes
+        file:
+          src: "{{ ansible_env.HOME }}/git/Dotfiles/.zshrc"
+          dest: "{{ ansible_env.HOME }}/.zshrc"
+          state: link
+          force: yes
+
       - name: Set default shell to zsh
         become: yes
         shell:
           cmd: "chsh -s $(which zsh) {{ lookup('env', 'USER') }}"
+
+      - name: Install zsh-theme-powerlevel10k
+        become: yes
+        aur:
+          name:
+            - zsh-theme-powerlevel10k-git
+          state: present
+          use: yay
+
+      - name: Link .p10k.zsh
+        become: yes
+        file:
+          src: "{{ ansible_env.HOME }}/git/Dotfiles/.p10k.zsh"
+          dest: "{{ ansible_env.HOME }}/.p10k.zsh"
+          state: link
+          force: yes
 
 
 
