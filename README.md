@@ -32,7 +32,9 @@ Follow the instructions
 >**NOTE**
 Follow the instructions
 
-## Step 6: Download the last script and run it to install the environment
+## Step 6: Switch to the newly created user
+
+## Step 7: Download the last script and run it to install the environment
 `$ curl https://bit.ly/2P4Mg7D -L -o install_environment.sh` <br>
 `$ sh install_environment.sh`
 
