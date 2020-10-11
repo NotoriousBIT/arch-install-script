@@ -4,10 +4,6 @@
       - kewlfft.aur
     tasks:
 
-      - name: Install aur from ansible galaxy
-        shell:
-          cmd: ansible-galaxy install kewlfft.aur
-
       - name: Install git
         become: yes
         package:
