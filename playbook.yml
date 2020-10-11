@@ -32,12 +32,19 @@
           repo: https://github.com/NotoriousBIT/Dotfiles.git
           dest: "{{ ansible_env.HOME }}/git/Dotfiles"
 
-      - name: Set keyboard layout DE
+      - name: Link .config
         become: yes
         file:
+          src: "{{ ansible_env.HOME }}/git/Dotfiles/.config"
+          dest: "{{ ansible_env.HOME }}/.config"
+          state: link
+          force: yes
+
+      - name: Set keyboard layout DE
+        become: yes
+        copy:
           src: "{{ ansible_env.HOME }}/git/Dotfiles/etc/X11/xorg.conf.d/20-keyboard.conf"
           dest: /etc/X11/xorg.conf.d/20-keyboard.conf
-          state: link
           force: yes
 
       - name: Install audio software
@@ -125,64 +132,21 @@
             - awesome
           state: present
 
+      - name: Install Alacritty
+        become: yes
+        package:
+          name:
+            - alacritty
+          state: present
 
 
-          #!/bin/bash
 
 
-
-
-# ###########################
-# # GIT
-# ###########################
-# pacman -S --noconfirm git
-# mkdir git
-# chown --recursive $SUDO_USER: git
-
-# ###########################
-# # YAY
-# ###########################
-# pacman -S --noconfirm git go
-# rm -rf yay
-# git clone https://aur.archlinux.org/yay.git
-# chown $SUDO_USER: yay
-# (cd yay && su $SUDO_USER -c "makepkg -s")
-# (cd yay && pacman -U --noconfirm *.pkg.tar.*)
-# rm -rf yay
 
 # ###########################
 # # FONTS
 # ###########################
 # pacman -S --noconfirm ttf-opensans ttf-ubuntu-font-family awesome-terminal-fonts powerline-fonts
-
-# ###########################
-# # KEYBOARD LAYOUT DE
-# ###########################
-# echo 'Section "InputClass"' > /etc/X11/xorg.conf.d/20-keyboard.conf
-# echo '       Identifier "keyboard"' >> /etc/X11/xorg.conf.d/20-keyboard.conf
-# echo '       MatchIsKeyboard "yes"' >> /etc/X11/xorg.conf.d/20-keyboard.conf
-# echo '       Option "XkbLayout" "de"' >> /etc/X11/xorg.conf.d/20-keyboard.conf
-# echo '       Option "XkbVariant" "nodeadkeys"' >> /etc/X11/xorg.conf.d/20-keyboard.conf
-# echo 'EndSection' >> /etc/X11/xorg.conf.d/20-keyboard.conf
-
-# ###########################
-# # LIGHTDM GREETER
-# ###########################
-# pacman -S --noconfirm lightdm lightdm-webkit2-greeter light-locker
-
-# wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/helper/lightdm/lightdm.conf -O /etc/lightdm/lightdm.conf
-# wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/helper/lightdm/lightdm-webkit2-greeter.conf -O /etc/lightdm/lightdm-webkit2-greeter.conf
-
-# # AETHER THEME
-# pacman -S --noconfirm git ttf-opensans
-# rm -rf lightdm-webkit-theme-aether
-# git clone https://aur.archlinux.org/lightdm-webkit-theme-aether.git
-# chown $SUDO_USER: lightdm-webkit-theme-aether
-# (cd lightdm-webkit-theme-aether && su $SUDO_USER -c "makepkg -s")
-# (cd lightdm-webkit-theme-aether && pacman -U --noconfirm *.pkg.tar.*)
-# rm -rf lightdm-webkit-theme-aether
-
-# systemctl enable lightdm
 
 
 # ###########################
