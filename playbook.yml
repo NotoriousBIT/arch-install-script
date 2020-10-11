@@ -163,7 +163,7 @@
       - name: Set default shell to zsh
         become: yes
         shell:
-          cmd: "chsh -s $(which zsh) {{ lookup('env', 'USER') }}""
+          cmd: "chsh -s $(which zsh) {{ lookup('env', 'USER') }}"
 
 
 
