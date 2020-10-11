@@ -2,7 +2,6 @@
 sudo pacman -S --noconfirm ansible
 
 ansible-galaxy install kewlfft.aur
-ansible-galaxy install jonsible.yay
 
 mkdir -p /tmp/arch-install-script
 

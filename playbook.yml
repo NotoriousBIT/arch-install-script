@@ -11,19 +11,15 @@
             - git
           state: present
 
+      - name: Download yay
+        git:
+          repo: https://aur.archlinux.org/yay.git
+          dest: "{{ ansible_env.HOME }}/git/yay"
+
       - name: Install yay
-        include_role:
-          name: jonsible.yay
-
-      # - name: Download yay
-      #   git:
-      #     repo: https://aur.archlinux.org/yay.git
-      #     dest: "{{ ansible_env.HOME }}/git/yay"
-
-      # - name: Install yay
-      #   shell:
-      #     cmd: makepkg -isf --noconfirm
-      #     chdir: "{{ ansible_env.HOME }}/git/yay"
+        shell:
+          cmd: makepkg -isf --noconfirm
+          chdir: "{{ ansible_env.HOME }}/git/yay"
 
       # - name: Install yay
       #   become: yes
