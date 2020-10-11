@@ -176,6 +176,7 @@
         aur:
           name:
             - zsh-theme-powerlevel10k-git
+            - ttf-font-awesome
           state: present
           use: yay
 
