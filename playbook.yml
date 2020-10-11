@@ -139,6 +139,20 @@
             - alacritty
           state: present
 
+      - name: Install Picom
+        become: yes
+        package:
+          name:
+            - picom
+          state: present
+
+      - name: Install nitrogen
+        become: yes
+        package:
+          name:
+            - nitrogen
+          state: present
+
 
 
 
@@ -147,15 +161,6 @@
 # # FONTS
 # ###########################
 # pacman -S --noconfirm ttf-opensans ttf-ubuntu-font-family awesome-terminal-fonts powerline-fonts
-
-
-# ###########################
-# # TERMITE
-# ###########################
-# pacman -S --noconfirm termite
-
-# mkdir -p /home/$SUDO_USER/.config/termite
-# wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/configs/.config/termite/config -O /home/$SUDO_USER/.config/termite/config
 
 # chown --recursive $SUDO_USER: .config
 
@@ -188,15 +193,6 @@
 
 # mkdir -p /home/$SUDO_USER/.config/nitrogen
 # wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/configs/.config/nitrogen/bg-saved.cfg -O /home/$SUDO_USER/.config/nitrogen/bg-saved.cfg
-# chown --recursive $SUDO_USER: .config
-
-# ###########################
-# # COMPTON
-# ###########################
-# pacman -S --noconfirm picom # compton
-
-# mkdir -p /home/$SUDO_USER/.config/picom
-# wget -N https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/configs/.config/picom/picom.conf -O /home/$SUDO_USER/.config/picom/picom.conf
 # chown --recursive $SUDO_USER: .config
 
 # ###########################
