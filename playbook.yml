@@ -9,6 +9,13 @@
             - git
           state: present
 
+      - name: Install yay
+        become: yes
+        package:
+          name:
+            - yey
+          state: present
+
       - name: Download Dotconfig repo
         git:
           repo: https://github.com/NotoriousBIT/Dotfiles.git
@@ -70,6 +77,13 @@
             - lightdm-webkit2-greeter
             - light-locker
           state: present
+
+      - name: Install theme litarvan
+        become: yes
+          name:
+            - lightdm-webkit-theme-litarvan
+          state: present
+          use: yay
 
       - name: Enable service lightdm and ensure it is not masked
         systemd:
