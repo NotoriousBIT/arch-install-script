@@ -106,14 +106,14 @@
 
       - name: Set lightdm config
         become: yes
-        file:
+        copy:
           src: "{{ ansible_env.HOME }}/git/Dotfiles/etc/lightdm/lightdm.conf"
           dest: /etc/lightdm/lightdm.conf
           force: yes
 
       - name: Set lightdm-webkit2-greeter config
         become: yes
-        file:
+        copy:
           src: "{{ ansible_env.HOME }}/git/Dotfiles/etc/lightdm/lightdm-webkit2-greeter.conf"
           dest: /etc/lightdm/lightdm-webkit2-greeter.conf
           force: yes
