@@ -172,7 +172,7 @@
           cmd: "chsh -s $(which zsh) {{ lookup('env', 'USER') }}"
 
       - name: Install zsh-theme-powerlevel10k
-        become: yes
+        # become: yes
         aur:
           name:
             - zsh-theme-powerlevel10k-git
