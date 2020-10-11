@@ -22,7 +22,8 @@
       - name: Install yay
         become: yes
         shell:
-          cmd: "pacman -U {{ ansible_env.HOME }}/git/yay/*.pkg.tar.gz"
+          cmd: pacman -U *.pkg.tar.zst --noconfirm
+          chdir: "{{ ansible_env.HOME }}/git/yay"
 
       - name: Download Dotconfig repo
         git:
