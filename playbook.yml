@@ -18,7 +18,7 @@
 
       - name: Build yay
         shell:
-          cmd: makepkg -sf
+          cmd: makepkg -sf --noconfirm
           chdir: "{{ ansible_env.HOME }}/git/yay"
 
       - name: Install yay
