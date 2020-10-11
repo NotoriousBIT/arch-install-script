@@ -15,8 +15,9 @@
           dest: "{{ ansible_env.HOME }}/git/yay"
 
       - name: Install yay
+        become: yes
         shell:
-          cmd: makepkg -si
+          cmd: makepkg -si --noconfirm
           chdir: "{{ ansible_env.HOME }}/git/yay"
 
       - name: Download Dotconfig repo
