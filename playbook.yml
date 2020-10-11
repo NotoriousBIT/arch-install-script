@@ -14,11 +14,16 @@
           repo: https://aur.archlinux.org/yay.git
           dest: "{{ ansible_env.HOME }}/git/yay"
 
+      - name: Build yay
+        become: yes
+        shell:
+          cmd: makepkg -sf
+          chdir: "{{ ansible_env.HOME }}/git/yay"
+
       - name: Install yay
         become: yes
         shell:
-          cmd: makepkg -sif --noconfirm
-          chdir: "{{ ansible_env.HOME }}/git/yay"
+          cmd: "pacman -U {{ ansible_env.HOME }}/git/yay/*.pkg.tar.gz"
 
       - name: Download Dotconfig repo
         git:
