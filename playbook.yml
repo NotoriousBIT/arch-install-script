@@ -33,7 +33,6 @@
           dest: "{{ ansible_env.HOME }}/git/Dotfiles"
 
       - name: Link .config
-        become: yes
         file:
           src: "{{ ansible_env.HOME }}/git/Dotfiles/.config"
           dest: "{{ ansible_env.HOME }}/.config"
