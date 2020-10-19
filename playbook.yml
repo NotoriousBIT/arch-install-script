@@ -58,7 +58,7 @@
         become: yes
         package:
           name:
-            - nvidia
+            - nvidia-lts
             - nvidia-settings
           state: present
 

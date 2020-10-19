@@ -106,7 +106,7 @@ curl -L https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/maste
 
 echo ""
 echo " Installing packages"
-pacstrap /mnt base base-devel linux linux-firmware linux-headers
+pacstrap /mnt base base-devel linux-lts linux-firmware linux-lts-headers
 
 echo ""
 echo " chroot"
