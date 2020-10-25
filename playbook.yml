@@ -39,13 +39,6 @@
           state: link
           force: yes
 
-      - name: Set keyboard layout DE
-        become: yes
-        copy:
-          src: "{{ ansible_env.HOME }}/git/Dotfiles/etc/X11/xorg.conf.d/20-keyboard.conf"
-          dest: /etc/X11/xorg.conf.d/20-keyboard.conf
-          force: yes
-
       - name: Install audio software
         become: yes
         package:
@@ -84,6 +77,13 @@
             - xorg-drivers
             - xorg-xinit
           state: present
+
+      - name: Set keyboard layout DE
+        become: yes
+        copy:
+          src: "{{ ansible_env.HOME }}/git/Dotfiles/etc/X11/xorg.conf.d/20-keyboard.conf"
+          dest: /etc/X11/xorg.conf.d/20-keyboard.conf
+          force: yes
 
       - name: Install light-dm
         become: yes
