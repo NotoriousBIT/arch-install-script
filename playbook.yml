@@ -131,6 +131,13 @@
             - awesome
           state: present
 
+      - name: Install dmenu
+        become: yes
+        package:
+          name:
+            - dmenu
+          state: present
+
       - name: Install Alacritty
         become: yes
         package:
@@ -188,6 +195,19 @@
           state: link
           force: yes
 
+      - name: Install wifi drivers
+        aur:
+          name:
+            - rtl8821ce-dkms-git
+          state: present
+          use: yay
+
+      - name: Install dialog
+        become: yes
+        package:
+          name:
+            - dialog
+          state: present
 
 
 
