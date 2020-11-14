@@ -102,7 +102,8 @@ done
 
 echo ""
 echo "# Setting mirroslist"
-curl -L https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/helper/mirrorlist -o /etc/pacman.d/mirrorlist
+curl -d "country=DE&protocol=http&protocol=https&ip_version=4" -X POST https://www.archlinux.org/mirrorlist/ -o /etc/pacman.d/mirrorlist
+sed -i 's/^.//g' /etc/pacman.d/mirrorlist  
 
 echo ""
 echo " Installing packages"

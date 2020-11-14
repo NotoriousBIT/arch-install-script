@@ -202,6 +202,12 @@
           state: present
           use: yay
 
+      # Some new Yoga laptops (like the Yoga 530) come with rtl8821ce as the Wi-Fi/Bluetooth chip. But the ideapad-laptop module, which may come included in your distribution, may conflict with this driver. To disable:
+      - name: Disable ideapad_laptop
+        become: yes
+        shell:
+          cmd: modprobe -r ideapad_laptop
+
       - name: Install dialog
         become: yes
         package:
