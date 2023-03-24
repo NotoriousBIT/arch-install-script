@@ -50,6 +50,7 @@ sed -i "s|GRUB_CMDLINE_LINUX_DEFAULT=\"loglevel=3 quiet\"|GRUB_CMDLINE_LINUX_DEF
 
 mkdir /boot/EFI
 EFI_PARTITION=$(blkid | grep "LABEL=\"EFI\"" | cut -d ':' -f1)
+echo "EFI PARTITION $EFI_PARTITION"
 
 mount $EFI_PARTITION /boot/EFI
 
@@ -58,7 +59,7 @@ grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 mkdir /boot/grub/locale
 cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
 
- grub-mkconfig -o /boot/grub/grub.cfg
+grub-mkconfig -o /boot/grub/grub.cfg
  
 #  # Create swap file
 #  fallocate -l 2G /swapfile
