@@ -102,7 +102,7 @@ done
 
 echo ""
 echo "# Setting mirroslist"
-curl -d "country=DE&protocol=http&protocol=https&ip_version=4" -X POST https://www.archlinux.org/mirrorlist/ -o /etc/pacman.d/mirrorlist
+curl -L -d "country=DE&protocol=http&protocol=https&ip_version=4" -X POST https://www.archlinux.org/mirrorlist/ -o /etc/pacman.d/mirrorlist
 sed -i 's/^.//g' /etc/pacman.d/mirrorlist  
 
 echo ""
