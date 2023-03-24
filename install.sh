@@ -24,13 +24,9 @@ done
 # 3 100% main
 
 # Get the corrosponding numbers of fdisk partition types
-#EFI_SYSTEM_NUMBER=$(echo "l" | fdisk $install_device | grep -oP "[0-9]+(?= EFI System )")
-#LINUX_FILESYSTEM_NUMBER=$(echo "l" | fdisk $install_device | grep -oP "[0-9]+(?= Linux filesystem )")
-#LINUX_LVM_NUMBER=$(echo "l" | fdisk $install_device | grep -oP "[0-9]+(?= Linux LVM)")
-
-EFI_SYSTEM_NUMBER="EF"
-LINUX_FILESYSTEM_NUMBER="83"
-LINUX_LVM_NUMBER="8E"
+EFI_SYSTEM_NUMBER=$(echo "l" | fdisk $install_device | grep -oP "[0-9]+(?= EFI System )")
+LINUX_FILESYSTEM_NUMBER=$(echo "l" | fdisk $install_device | grep -oP "[0-9]+(?= Linux filesystem )")
+LINUX_LVM_NUMBER=$(echo "l" | fdisk $install_device | grep -oP "[0-9]+(?= Linux LVM)")
 
 echo "EFI_SYSTEM_NUMBER $EFI_SYSTEM_NUMBER"
 echo "LINUX_FILESYSTEM_NUMBER $LINUX_FILESYSTEM_NUMBER"
