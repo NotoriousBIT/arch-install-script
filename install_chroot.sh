@@ -6,7 +6,7 @@ echo "127.0.0.1	localhost" > /etc/hosts
 echo "::1 localhost" >> /etc/hosts
 echo "127.0.0.1	$hostname.localdomain $hostname" >> /etc/hosts
 
-pacman -S --noconfirm networkmanager dhcpcd netctl vim lvm2
+pacman -S --noconfirm networkmanager dhcpcd netctl vim lvm2 wget
 
 echo ""
 echo " enable dhcpcd"
