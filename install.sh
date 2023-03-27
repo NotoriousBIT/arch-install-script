@@ -24,7 +24,11 @@ done
 wipefs -af $install_device
 
 # Create partitions
-echo ",500MB,EF\r\n,500MB,83\r\n,,8E" | sfdisk $install_device
+sfdisk $install_device << EOF
+,500MB,EF
+,500MB,83
+,,8E
+EOF
 
 # Format the EFI partition
 mkfs.fat -n EFI -F32 "${install_device}p1"
