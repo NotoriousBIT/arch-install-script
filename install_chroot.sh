@@ -40,7 +40,7 @@ passwd
 
 pacman -S --noconfirm grub efibootmgr dosfstools os-prober mtools lvm2
 sed -ri "s|(^MODULES=\()(.*)(\))|\1\2 ext4\3|g" /etc/mkinitcpio.conf
-sed -ri "s|(^HOOKS.*)filesystems(.*)|\1encryps lvm2 filesystems\2|g" /etc/mkinitcpio.conf
+sed -ri "s|(^HOOKS.*)filesystems(.*)|\1encrypt lvm2 filesystems\2|g" /etc/mkinitcpio.conf
 
 # Regenerate initrd image
 mkinitcpio -p linux-lts
