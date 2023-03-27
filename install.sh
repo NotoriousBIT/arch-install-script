@@ -5,6 +5,8 @@ loadkeys de-latin1
 echo "# Setting system time"
 timedatectl set-ntp true
 
+lsblk
+
 while true; do
   read -p "Specify the name of the device to install to (i.e. /dev/sda) " install_device
   read -p "You selcted \"$install_device\", is this correct? [Y/n] " yn
@@ -84,18 +86,18 @@ while true; do
   esac
 done
 
-#echo ""
-#echo " chroot"
-#curl -L https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/install_chroot.sh -o /mnt/install_chroot.sh
-#arch-chroot /mnt sh install_chroot.sh
+echo ""
+echo " chroot"
+curl -L https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/install_chroot.sh -o /mnt/install_chroot.sh
+arch-chroot /mnt sh install_chroot.sh
 
-#umount -a
+umount -a
 
-#while true; do
-#  read -p "Do you wish to reboot? [Y/n] " yn
-#  case $yn in
-#          [Yy][eE][sS]|[yY] ) reboot; break;;
-#          [Nn][Oo]|[nN] ) break;;
-#          * ) echo "Please answer yes or no.";;
-#  esac
-#done
+while true; do
+  read -p "Do you wish to reboot? [Y/n] " yn
+  case $yn in
+          [Yy][eE][sS]|[yY] ) reboot; break;;
+          [Nn][Oo]|[nN] ) break;;
+          * ) echo "Please answer yes or no.";;
+  esac
+done
