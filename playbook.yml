@@ -9,15 +9,15 @@
             - git
           state: present
 
-      - name: Download yay
+      - name: Download paru
         git:
-          repo: https://aur.archlinux.org/yay.git
+          repo: https://aur.archlinux.org/paru.git
           dest: "{{ ansible_env.HOME }}/git/yay"
 
-      - name: Install yay
+      - name: Install paru
         shell:
-          cmd: makepkg -isf --noconfirm
-          chdir: "{{ ansible_env.HOME }}/git/yay"
+          cmd: makepkg -si
+          chdir: "{{ ansible_env.HOME }}/git/paru"
 
       # - name: Install yay
       #   become: yes
