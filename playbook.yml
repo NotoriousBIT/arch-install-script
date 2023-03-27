@@ -12,7 +12,7 @@
       - name: Download paru
         git:
           repo: https://aur.archlinux.org/paru.git
-          dest: "{{ ansible_env.HOME }}/git/yay"
+          dest: "{{ ansible_env.HOME }}/git/paru"
 
       - name: Install paru
         shell:
