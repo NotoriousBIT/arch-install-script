@@ -114,7 +114,7 @@ echo " chroot"
 curl -L https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/install_chroot.sh -o /mnt/install_chroot.sh
 arch-chroot /mnt sh install_chroot.sh
 
-umount -a
+#umount -a
 
 while true; do
   read -p "Do you wish to reboot? [Y/n] " yn
