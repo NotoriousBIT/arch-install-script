@@ -15,6 +15,7 @@
           dest: "{{ ansible_env.HOME }}/git/paru"
 
       - name: Install paru
+        become: yes
         shell:
           cmd: makepkg -si
           chdir: "{{ ansible_env.HOME }}/git/paru"
