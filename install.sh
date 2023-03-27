@@ -5,9 +5,6 @@ loadkeys de-latin1
 echo "# Setting system time"
 timedatectl set-ntp true
 
-echo "# lsblk"
-lsblk
-
 while true; do
   read -p "Specify the name of the device to install to (i.e. /dev/sda) " install_device
   read -p "You selcted \"$install_device\", is this correct? [Y/n] " yn
@@ -23,51 +20,21 @@ done
 # 2 500MB Boot
 # 3 100% main
 
-# Get the corrosponding numbers of fdisk partition types
-EFI_SYSTEM_NUMBER=$(echo "l" | fdisk $install_device | grep -oP "[0-9]+(?= EFI System )")
-LINUX_FILESYSTEM_NUMBER=$(echo "l" | fdisk $install_device | grep -oP "[0-9]+(?= Linux filesystem )")
-LINUX_LVM_NUMBER=$(echo "l" | fdisk $install_device | grep -oP "[0-9]+(?= Linux LVM)")
-
-echo "EFI_SYSTEM_NUMBER $EFI_SYSTEM_NUMBER"
-echo "LINUX_FILESYSTEM_NUMBER $LINUX_FILESYSTEM_NUMBER"
-echo "LINUX_LVM_NUMBER $LINUX_LVM_NUMBER"
-
 # Wipe the disk
 wipefs -af $install_device
 
-(echo g; echo w) | fdisk $install_device
-
-# Create partition 1
-(echo n; echo 1; echo ""; echo "+500M"; echo w) | fdisk $install_device
-(echo t; echo $EFI_SYSTEM_NUMBER; echo w) | fdisk $install_device
-
-# Create partition 2
-(echo n; echo 2; echo ""; echo "+500M"; echo w) | fdisk $install_device
-(echo t; echo 2; echo $LINUX_FILESYSTEM_NUMBER; echo w) | fdisk $install_device
-
-# Create partition 3
-(echo n; echo 3; echo ""; echo ""; echo w) | fdisk $install_device
-(echo t; echo 3; echo $LINUX_LVM_NUMBER; echo w) | fdisk $install_device
-
-# Get partition names
-PARTITION_EFI=$(fdisk -l $install_device | grep "500M EFI System" | grep -oP "^[a-z0-9\/]+")
-echo "EFI partition is @ $PARTITION_EFI"
-
-PARTITION_BOOT=$(fdisk -l $install_device | grep "500M Linux filesystem" | grep -oP "^[a-z0-9\/]+")
-echo "Boot partition is @ $PARTITION_BOOT"
-
-PARTITION_LVM=$(fdisk -l $install_device | grep "Linux LVM" | grep -oP "^[a-z0-9\/]+")
-echo "LVM partition is @ $PARTITION_LVM"
+# Create partitions
+echo ",500MB,EF\r\n,500MB,83\r\n,,8E" | sfdisk $install_device
 
 # Format the EFI partition
-mkfs.fat -n EFI -F32 $PARTITION_EFI
+mkfs.fat -n EFI -F32 "${install_device}p1"
 
 # Format the boot partition
-mkfs.ext4 -L BOOT $PARTITION_BOOT
+mkfs.ext4 -F -L BOOT "${install_device}p2"
 
 # Set up encryption
-cryptsetup luksFormat $PARTITION_LVM
-cryptsetup open --type luks $PARTITION_LVM lvm
+cryptsetup luksFormat "${install_device}p3"
+cryptsetup open --type luks "${install_device}p3" lvm
 
 pvcreate --dataalignment 1m /dev/mapper/lvm
 vgcreate vg0 /dev/mapper/lvm
@@ -83,11 +50,25 @@ mkdir /mnt/home
 mount /dev/vg0/lv_home /mnt/home
 
 mkdir /mnt/boot
-mount $PARTITION_BOOT /mnt/boot
+mount "${install_device}p2" /mnt/boot
 
 mkdir /mnt/etc
 genfstab -U -p /mnt >> /mnt/etc/fstab
 
+mkdir /mnt/boot/efi
+mount "${install_device}p1" /mnt/boot/efi
+
+echo ""
+echo "# Setting mirroslist"
+curl -L -d "country=DE&protocol=http&protocol=https&ip_version=4" -X POST https://www.archlinux.org/mirrorlist/ -o /etc/pacman.d/mirrorlist
+sed -i 's/^.//g' /etc/pacman.d/mirrorlist  
+
+echo ""
+echo " Installing packages"
+pacstrap /mnt base base-devel linux-lts linux-firmware linux-lts-headers
+
+# 'install' fstab
+genfstab -pU /mnt >> /mnt/etc/fstab
 
 while true; do
   cat /mnt/etc/fstab
@@ -99,28 +80,18 @@ while true; do
   esac
 done
 
-
-echo ""
-echo "# Setting mirroslist"
-curl -L -d "country=DE&protocol=http&protocol=https&ip_version=4" -X POST https://www.archlinux.org/mirrorlist/ -o /etc/pacman.d/mirrorlist
-sed -i 's/^.//g' /etc/pacman.d/mirrorlist  
-
-echo ""
-echo " Installing packages"
-pacstrap /mnt base base-devel linux-lts linux-firmware linux-lts-headers
-
-echo ""
-echo " chroot"
-curl -L https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/install_chroot.sh -o /mnt/install_chroot.sh
-arch-chroot /mnt sh install_chroot.sh
+#echo ""
+#echo " chroot"
+#curl -L https://raw.githubusercontent.com/NotoriousBIT/arch-install-script/master/install_chroot.sh -o /mnt/install_chroot.sh
+#arch-chroot /mnt sh install_chroot.sh
 
 #umount -a
 
-while true; do
-  read -p "Do you wish to reboot? [Y/n] " yn
-  case $yn in
-          [Yy][eE][sS]|[yY] ) reboot; break;;
-          [Nn][Oo]|[nN] ) break;;
-          * ) echo "Please answer yes or no.";;
-  esac
-done
+#while true; do
+#  read -p "Do you wish to reboot? [Y/n] " yn
+#  case $yn in
+#          [Yy][eE][sS]|[yY] ) reboot; break;;
+#          [Nn][Oo]|[nN] ) break;;
+#          * ) echo "Please answer yes or no.";;
+#  esac
+#done
