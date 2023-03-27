@@ -6,7 +6,7 @@ echo "127.0.0.1	localhost" > /etc/hosts
 echo "::1 localhost" >> /etc/hosts
 echo "127.0.0.1	$hostname.localdomain $hostname" >> /etc/hosts
 
-pacman -S --noconfirm networkmanager dhcpcd wpa_supplicant wireless_tools netctl wget vim xterm rsync
+pacman -S --noconfirm networkmanager dhcpcd netctl vim lvm2
 
 echo ""
 echo " enable dhcpcd"
@@ -39,20 +39,17 @@ echo " setting root password:"
 passwd
 
 pacman -S --noconfirm grub efibootmgr dosfstools os-prober mtools lvm2
-sed -i "s|HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)|HOOKS=(base udev autodetect modconf block encrypt lvm2 filesystems keyboard fsck)|" /etc/mkinitcpio.conf
+sed -ri "s|(^MODULES=\()(.*)(\))|\1\2 ext4\3|g" /etc/mkinitcpio.conf
+sed -ri "s|(^HOOKS.*)filesystems(.*)|\1encryps lvm2 filesystems\2|g" /etc/mkinitcpio.conf
 
+# Regenerate initrd image
 mkinitcpio -p linux-lts
 
+# Setup grub
 sed -i "s|#GRUB_ENABLE_CRYPTODISK=y|GRUB_ENABLE_CRYPTODISK=y|" /etc/default/grub
 
 LUKS_PARTITION=$(blkid | grep "LUKS" | cut -d ':' -f1)
 sed -i "s|GRUB_CMDLINE_LINUX_DEFAULT=\"loglevel=3 quiet\"|GRUB_CMDLINE_LINUX_DEFAULT=\"loglevel=3 cryptdevice=$LUKS_PARTITION:vg0:allow-discards quiet\"|" /etc/default/grub
-
-mkdir /boot/EFI
-EFI_PARTITION=$(blkid | grep "LABEL=\"EFI\"" | cut -d ':' -f1)
-echo "EFI PARTITION $EFI_PARTITION"
-
-mount $EFI_PARTITION /boot/EFI
 
 grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 
