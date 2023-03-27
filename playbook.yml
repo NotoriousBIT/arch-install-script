@@ -95,7 +95,7 @@
 
       - name: Install theme litarvan
         become: yes
-        aur:
+        kewlfft.aur.aur:
           name:
             - lightdm-webkit-theme-litarvan
           state: present
@@ -178,7 +178,7 @@
 
       - name: Install zsh-theme-powerlevel10k
         # become: yes
-        aur:
+        kewlfft.aur.aur:
           name:
             - zsh-theme-powerlevel10k-git
             - ttf-font-awesome
@@ -194,7 +194,7 @@
           force: yes
 
       - name: Install wifi drivers
-        aur:
+        kewlfft.aur.aur:
           name:
             - rtl8821ce-dkms-git
           state: present
